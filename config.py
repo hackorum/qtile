@@ -5,7 +5,6 @@ from libqtile.lazy import lazy
 mod = "mod4"
 terminal = "st"
 
-
 keys = [
     Key([mod], "p", lazy.spawn("dmenu_run -p 'Run:'")),
     Key([mod], "h", lazy.layout.left()),
@@ -46,13 +45,20 @@ for i in groups:
         ]
     )
 
+layout_config = {
+    "border_width": 2,
+    "margin": 8,
+    "border_focus": "98c379",
+    "border_normal": "e5c07b",
+}
+
 layouts = [
+    layout.MonadTall(**layout_config),
     layout.Columns(border_focus="#98c379", border_normal="#e5c07b", margin=8),
     layout.Max(),
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
