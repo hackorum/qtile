@@ -30,20 +30,21 @@ keys = [
     Key([mod], "q", lazy.window.kill()),
     Key([mod, "shift"], "r", lazy.restart()),
     Key([mod, "shift"], "q", lazy.shutdown()),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume 0 +10%")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume 0 -10%")),
+    Key([], "XF86AudioRaiseVolume",
+        lazy.spawn("pactl set-sink-volume 0 +10%")),
+    Key([], "XF86AudioLowerVolume",
+        lazy.spawn("pactl set-sink-volume 0 -10%")),
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute toggle")),
 ]
 
 groups = [Group(i) for i in "123456789"]
 
 for i in groups:
-    keys.extend(
-        [
-            Key([mod], i.name, lazy.group[i.name].toscreen()),
-            Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True)),
-        ]
-    )
+    keys.extend([
+        Key([mod], i.name, lazy.group[i.name].toscreen()),
+        Key([mod, "shift"], i.name,
+            lazy.window.togroup(i.name, switch_group=False)),
+    ])
 
 layout_config = {
     "border_width": 2,
@@ -86,180 +87,176 @@ colors = [
 ]
 
 screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Image(
-                    filename="~/.config/qtile/icons/logo.png",
-                    scale="True",
-                    margin=4,
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal)},
-                ),
-                widget.GroupBox(
-                    font="FiraCode Nerd Font",
-                    fontsize=12,
-                    margin_y=3,
-                    margin_x=0,
-                    padding_y=5,
-                    padding_x=3,
-                    borderwidth=3,
-                    rounded=False,
-                    highlight_method="line",
-                    this_current_screen_border=colors[2],
-                    other_screen_border=colors[4],
-                    foreground=colors[2],
-                    active=colors[7],
-                    inactive=colors[7],
-                    highlight_color="#cccccc55",
-                ),
-                widget.WindowName(),
-                widget.Sep(
-                    linewidth=0,
-                    padding=40,
-                ),
-                widget.Systray(),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    foreground=colors[4],
-                ),
-                widget.CurrentLayoutIcon(
-                    foreground=colors[0], background=colors[4], padding=0, scale=0.7
-                ),
-                widget.CurrentLayout(background=colors[4], padding=5),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    foreground=colors[2],
-                    background=colors[4],
-                ),
-                widget.TextBox(text="⟳", background=colors[2], padding=3),
-                widget.CheckUpdates(
-                    update_interval=1800,
-                    distro="Arch_checkupdates",
-                    display_format="{updates} Updates",
-                    no_update_string="0 Updates",
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(
-                            terminal + " -e sudo pacman -Syu"
-                        )
-                    },
-                    background=colors[2],
-                    padding=5,
-                ),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    foreground=colors[4],
-                    background=colors[2],
-                ),
-                widget.TextBox(text="", background=colors[4]),
-                widget.Battery(update_interval=10, background=colors[4], padding=10),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    background=colors[4],
-                    foreground=colors[2],
-                ),
-                widget.TextBox(text="", background=colors[2], padding=3),
-                widget.Clock(
-                    background=colors[2], format="%A, %B %d - %H:%M ", padding=10
-                ),
-            ],
-            24,
-        ),
-    ),
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Image(
-                    filename="~/.config/qtile/icons/logo.png",
-                    scale="True",
-                    margin=4,
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal)},
-                ),
-                widget.GroupBox(
-                    font="FiraCode Nerd Font",
-                    fontsize=12,
-                    margin_y=3,
-                    margin_x=0,
-                    padding_y=5,
-                    padding_x=3,
-                    borderwidth=3,
-                    rounded=False,
-                    highlight_method="line",
-                    this_current_screen_border=colors[2],
-                    other_screen_border=colors[4],
-                    foreground=colors[2],
-                    active=colors[7],
-                    inactive=colors[7],
-                    highlight_color="#cccccc55",
-                ),
-                widget.WindowName(),
-                widget.Sep(
-                    linewidth=0,
-                    padding=40,
-                ),
-                widget.Systray(),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    foreground=colors[4],
-                ),
-                widget.CurrentLayoutIcon(
-                    foreground=colors[0], background=colors[4], padding=0, scale=0.7
-                ),
-                widget.CurrentLayout(background=colors[4], padding=5),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    foreground=colors[2],
-                    background=colors[4],
-                ),
-                widget.TextBox(text="⟳", background=colors[2], padding=3),
-                widget.CheckUpdates(
-                    update_interval=1800,
-                    distro="Arch_checkupdates",
-                    display_format="{updates} Updates",
-                    no_update_string="0 Updates",
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(
-                            terminal + " -e sudo pacman -Syu"
-                        )
-                    },
-                    background=colors[2],
-                    padding=5,
-                ),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    foreground=colors[4],
-                    background=colors[2],
-                ),
-                widget.TextBox(text="", background=colors[4]),
-                widget.Battery(update_interval=10, background=colors[4], padding=10),
-                widget.TextBox(
-                    text="",
-                    padding=-9,
-                    fontsize=50,
-                    background=colors[4],
-                    foreground=colors[2],
-                ),
-                widget.TextBox(text="", background=colors[2], padding=3),
-                widget.Clock(
-                    background=colors[2], format="%A, %B %d - %H:%M ", padding=10
-                ),
-            ],
-            24,
-        ),
-    ),
+    Screen(top=bar.Bar(
+        [
+            widget.Image(
+                filename="~/.config/qtile/icons/logo.png",
+                scale="True",
+                margin=4,
+                mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal)},
+            ),
+            widget.GroupBox(
+                font="FiraCode Nerd Font",
+                fontsize=12,
+                margin_y=3,
+                margin_x=0,
+                padding_y=5,
+                padding_x=3,
+                borderwidth=3,
+                rounded=False,
+                highlight_method="line",
+                this_current_screen_border=colors[2],
+                other_screen_border=colors[4],
+                foreground=colors[2],
+                active=colors[7],
+                inactive=colors[7],
+                highlight_color="#cccccc55",
+            ),
+            widget.WindowName(),
+            widget.Sep(
+                linewidth=0,
+                padding=40,
+            ),
+            widget.Systray(),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                foreground=colors[4],
+            ),
+            widget.CurrentLayoutIcon(foreground=colors[0],
+                                     background=colors[4],
+                                     padding=0,
+                                     scale=0.7),
+            widget.CurrentLayout(background=colors[4], padding=5),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                foreground=colors[2],
+                background=colors[4],
+            ),
+            widget.TextBox(text="⟳", background=colors[2], padding=3),
+            widget.CheckUpdates(
+                update_interval=1800,
+                distro="Arch_checkupdates",
+                display_format="{updates} Updates",
+                no_update_string="0 Updates",
+                mouse_callbacks={
+                    "Button1":
+                    lambda: qtile.cmd_spawn(terminal + " -e sudo pacman -Syu")
+                },
+                background=colors[2],
+                padding=5,
+            ),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                foreground=colors[4],
+                background=colors[2],
+            ),
+            widget.TextBox(text="", background=colors[4]),
+            widget.Battery(
+                update_interval=10, background=colors[4], padding=10),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                background=colors[4],
+                foreground=colors[2],
+            ),
+            widget.TextBox(text="", background=colors[2], padding=3),
+            widget.Clock(
+                background=colors[2], format="%A, %B %d - %H:%M ", padding=10),
+        ],
+        24,
+    ), ),
+    Screen(top=bar.Bar(
+        [
+            widget.Image(
+                filename="~/.config/qtile/icons/logo.png",
+                scale="True",
+                margin=4,
+                mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal)},
+            ),
+            widget.GroupBox(
+                font="FiraCode Nerd Font",
+                fontsize=12,
+                margin_y=3,
+                margin_x=0,
+                padding_y=5,
+                padding_x=3,
+                borderwidth=3,
+                rounded=False,
+                highlight_method="line",
+                this_current_screen_border=colors[2],
+                other_screen_border=colors[4],
+                foreground=colors[2],
+                active=colors[7],
+                inactive=colors[7],
+                highlight_color="#cccccc55",
+            ),
+            widget.WindowName(),
+            widget.Sep(
+                linewidth=0,
+                padding=40,
+            ),
+            widget.Systray(),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                foreground=colors[4],
+            ),
+            widget.CurrentLayoutIcon(foreground=colors[0],
+                                     background=colors[4],
+                                     padding=0,
+                                     scale=0.7),
+            widget.CurrentLayout(background=colors[4], padding=5),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                foreground=colors[2],
+                background=colors[4],
+            ),
+            widget.TextBox(text="⟳", background=colors[2], padding=3),
+            widget.CheckUpdates(
+                update_interval=1800,
+                distro="Arch_checkupdates",
+                display_format="{updates} Updates",
+                no_update_string="0 Updates",
+                mouse_callbacks={
+                    "Button1":
+                    lambda: qtile.cmd_spawn(terminal + " -e sudo pacman -Syu")
+                },
+                background=colors[2],
+                padding=5,
+            ),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                foreground=colors[4],
+                background=colors[2],
+            ),
+            widget.TextBox(text="", background=colors[4]),
+            widget.Battery(
+                update_interval=10, background=colors[4], padding=10),
+            widget.TextBox(
+                text="",
+                padding=-9,
+                fontsize=50,
+                background=colors[4],
+                foreground=colors[2],
+            ),
+            widget.TextBox(text="", background=colors[2], padding=3),
+            widget.Clock(
+                background=colors[2], format="%A, %B %d - %H:%M ", padding=10),
+        ],
+        24,
+    ), ),
 ]
 
 mouse = [
@@ -269,9 +266,10 @@ mouse = [
         lazy.window.set_position_floating(),
         start=lazy.window.get_position(),
     ),
-    Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
-    ),
+    Drag([mod],
+         "Button3",
+         lazy.window.set_size_floating(),
+         start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
@@ -281,17 +279,15 @@ main = None
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(
-    float_rules=[
-        *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),
-        Match(wm_class="makebranch"),
-        Match(wm_class="maketag"),
-        Match(wm_class="ssh-askpass"),
-        Match(title="branchdialog"),
-        Match(title="pinentry"),
-    ]
-)
+floating_layout = layout.Floating(float_rules=[
+    *layout.Floating.default_float_rules,
+    Match(wm_class="confirmreset"),
+    Match(wm_class="makebranch"),
+    Match(wm_class="maketag"),
+    Match(wm_class="ssh-askpass"),
+    Match(title="branchdialog"),
+    Match(title="pinentry"),
+])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 wmname = "LG3D"
